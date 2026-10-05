@@ -310,23 +310,28 @@
                         </summary>
                         <div class="mt-2 space-y-2 text-[11px] font-mono bg-slate-900 text-slate-200 p-3 rounded-lg overflow-x-auto">
 <pre>function doPost(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  var data = JSON.parse(e.postData.contents);
-  sheet.appendRow([
-    data.waktuSelesai,
-    data.nama,
-    data.kelas,
-    data.noAbsen,
-    data.tanggalLahir,
-    data.mapel,
-    data.nilai,
-    data.ringkasan
-  ]);
-  return ContentService.createTextOutput("Success").setMimeType(ContentService.MimeType.TEXT);
+  try {
+    var spreadsheet = SpreadsheetApp.openById("1Tlq1uDUneKFyZGFFDL_WmFL0RCudSMql-iDJ0LcxHv0");
+    var sheet = spreadsheet.getSheets()[0];
+    var data = JSON.parse(e.postData.contents);
+    sheet.appendRow([
+      data.waktuSelesai,
+      data.nama,
+      data.kelas,
+      data.noAbsen,
+      data.tanggalLahir,
+      data.mapel,
+      data.nilai,
+      data.ringkasan
+    ]);
+    return ContentService.createTextOutput("Success").setMimeType(ContentService.MimeType.TEXT);
+  } catch (error) {
+    return ContentService.createTextOutput("Error: " + error.message).setMimeType(ContentService.MimeType.TEXT);
+  }
 }</pre>
                         </div>
                         <p class="mt-2 text-[11px] text-slate-500">
-                            *Pastikan saat Deploy pilih <b>Execute as: Me</b> dan <b>Who has access: Anyone</b>.
+                            *Gunakan ID spreadsheet di kode, lalu deploy ulang sebagai versi baru dengan <b>Execute as: Me</b> dan <b>Who has access: Anyone</b>. URL pengaturan yang disimpan di browser hanya berlaku di browser tersebut; samakan URL Web App di semua browser.
                         </p>
                     </details>
 
