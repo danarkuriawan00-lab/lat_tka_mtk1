@@ -618,7 +618,7 @@
                 });
         }
 
-        const DEFAULT_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyd_wQOJ2XnXzS3ESDnhipqAqL1BdPZzLTqDzFX_rdhlOQMIG7fxT5OKD5RmQC2fV8IDw/exec";
+        const DEFAULT_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyD4irHcXajVFPpdCEiLgRHB0nPSlF0f0t9DqTvi2dqPHYu6NNRS3PgIV--zlg-Hm-gHg/exec";
         
         let studentData = {
             nama: "",
@@ -638,9 +638,12 @@
 
         function getScriptUrl() {
             const savedUrl = localStorage.getItem('cbt_script_url');
-            const previousDefaultUrl = "https://script.google.com/macros/s/AKfycbxyzvuxelcLdL1AUo1urkHztoAWa8dufd6nJA4pafTSWUAuhtUrQT_GM-hN3iFcPy0iXQ/exec";
+            const previousDefaultUrls = [
+                "https://script.google.com/macros/s/AKfycbxyzvuxelcLdL1AUo1urkHztoAWa8dufd6nJA4pafTSWUAuhtUrQT_GM-hN3iFcPy0iXQ/exec",
+                "https://script.google.com/macros/s/AKfycbyd_wQOJ2XnXzS3ESDnhipqAqL1BdPZzLTqDzFX_rdhlOQMIG7fxT5OKD5RmQC2fV8IDw/exec"
+            ];
 
-            if (!savedUrl || savedUrl === previousDefaultUrl) {
+            if (!savedUrl || previousDefaultUrls.includes(savedUrl)) {
                 return DEFAULT_SCRIPT_URL;
             }
             return savedUrl;
@@ -1103,12 +1106,12 @@
                 method: "POST",
                 mode: "no-cors",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "text/plain;charset=UTF-8"
                 },
                 body: JSON.stringify(payload)
             })
             .then(() => {
-                statusEl.textContent = "✓ Nilai berhasil dikirim dan tersimpan otomatis di Google Sheets!";
+                statusEl.textContent = "Permintaan rekap telah dikirim. Periksa Google Sheets untuk memastikan data tersimpan.";
                 statusEl.className = "text-xs text-emerald-600 mb-4 font-semibold";
             })
             .catch(err => {
